@@ -9,7 +9,7 @@ RUN apk add --no-cache \
 
 # Add the crontab entry
 RUN touch crontab.tmp \
-    echo '0 */2 * * * php /var/www/Keepstar/cron.php' > crontab.tmp \
+    && echo '0 */2 * * * php /var/www/Keepstar/cron.php' > crontab.tmp \
     && crontab crontab.tmp \
     && rm -rf crontab.tmp
 
