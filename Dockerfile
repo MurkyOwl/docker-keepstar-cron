@@ -7,19 +7,15 @@ RUN apk add --no-cache \
     # Install PHP dependencies
     docker-php-ext-install pdo_mysql gd bz2 intl mcrypt pcntl
 
-# Add the SeAT crontab entry
+# Add the crontab entry
 RUN touch crontab.tmp \
-    && echo '* * * * * php /var/www/seat/artisan schedule:run' > crontab.tmp \
+    echo '0 */2 * * * php /var/www/Keepstar/cron.php' > crontab.tmp \
     && crontab crontab.tmp \
     && rm -rf crontab.tmp
-
-# Skip migrations and assets publishing for this
-# container as those are not needed. App container
-# has this covered.
 
 COPY startup.sh /root/startup.sh
 RUN chmod +x /root/startup.sh
 
-WORKDIR /var/www/seat
+WORKDIR /var/www/Keepstar/
 
 ENTRYPOINT ["/bin/sh", "/root/startup.sh"]
